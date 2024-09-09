@@ -1,3 +1,4 @@
+// src/components/RemoveBg.tsx
 import ImagePreview from '@/components/ImagePreview';
 import ImageUploader from '@/components/ImageUpload';
 import { Button } from '@/components/ui/button';
@@ -18,7 +19,7 @@ const RemoveBg: React.FC = () => {
   const handleRemoveBg = async () => {
     if (imageBlob) {
       const formData = new FormData();
-      formData.append('image_file', imageBlob); 
+      formData.append('image_file', imageBlob);
 
       setLoading(true);
 
@@ -36,8 +37,6 @@ const RemoveBg: React.FC = () => {
           setResultUrl(URL.createObjectURL(blob));
         } else {
           console.error('Failed to remove background');
-          const errorText = await response.text();
-          console.error('Error response:', errorText); // Log the error response
         }
       } catch (error) {
         console.error('Error:', error);
@@ -48,17 +47,17 @@ const RemoveBg: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4">
-      <div className="flex flex-col md:flex-row w-full max-w-4xl space-y-4 md:space-y-0 md:space-x-4">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+      <div className="flex flex-col md:flex-row w-full max-w-6xl space-y-6 md:space-y-0 md:space-x-6">
         {/* Upload Section */}
-        <div className="flex-1">
+        <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
           <ImageUploader onDrop={handleDrop} />
           {imageUrl && (
-            <div className="mt-4">
+            <div className="mt-6">
               <ImagePreview imageUrl={imageUrl} />
               <Button
                 onClick={handleRemoveBg}
-                className="mt-4 bg-blue-500 text-white hover:bg-blue-600 transition-all"
+                className="mt-4 w-full bg-blue-500 text-white hover:bg-blue-600 transition-all py-2"
                 disabled={loading}
               >
                 {loading ? 'Processing...' : 'Remove Background'}
@@ -69,8 +68,8 @@ const RemoveBg: React.FC = () => {
 
         {/* Result Section */}
         {resultUrl && (
-          <div className="flex-1 mt-4 md:mt-0">
-            <h2 className="text-lg font-semibold text-gray-800">Result</h2>
+          <div className="flex-1 bg-white p-6 rounded-lg shadow-md mt-6 md:mt-0">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">Result</h2>
             <div className="w-full max-w-md mx-auto">
               <img
                 src={resultUrl}
