@@ -9,7 +9,6 @@ const BackgroundRemover: React.FC = () => {
   const [removalLevel, setRemovalLevel] = useState(50);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Fungsi untuk upload gambar
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -19,7 +18,6 @@ const BackgroundRemover: React.FC = () => {
     }
   };
 
-  // Fungsi untuk remove background menggunakan API remove.bg
   const removeBackground = async () => {
     if (!fileInputRef.current?.files?.[0]) return;
     setIsLoading(true);
@@ -39,13 +37,13 @@ const BackgroundRemover: React.FC = () => {
             size: 'auto',
             bg_removal_level: removalLevel,
           },
-          responseType: 'blob', // Mengambil gambar dalam bentuk blob
+          responseType: 'blob', 
         }
       );
 
       const imageBlob = new Blob([response.data], { type: 'image/png' });
       const imageUrl = URL.createObjectURL(imageBlob);
-      setEditedImage(imageUrl);  // Tampilkan hasil gambar
+      setEditedImage(imageUrl);  
     } catch (error) {
       console.error('Error removing background:', error);
     } finally {
@@ -53,7 +51,6 @@ const BackgroundRemover: React.FC = () => {
     }
   };
 
-  // Fungsi untuk download gambar hasil
   const handleDownload = () => {
     if (editedImage) {
       const link = document.createElement('a');
@@ -65,7 +62,6 @@ const BackgroundRemover: React.FC = () => {
     }
   };
 
-  // Fungsi untuk reset gambar
   const resetImage = () => {
     setOriginalImage(null);
     setEditedImage(null);
@@ -74,7 +70,7 @@ const BackgroundRemover: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-center mb-8 text-indigo-700">Background Remover</h1>
+      <h1 className="text-3xl font-bold text-center mb-8 text-indigo-700">Remove Background</h1>
       <div className="flex flex-col md:flex-row gap-8">
         <div className="flex-1">
           <div
@@ -138,21 +134,6 @@ const BackgroundRemover: React.FC = () => {
         >
           <FaTrash className="mr-2" /> Reset
         </button>
-      </div>
-      <div className="mt-8">
-        <label htmlFor="removalLevel" className="block text-sm font-medium text-gray-700 mb-2">
-          Background Removal Level: {removalLevel}%
-        </label>
-        <input
-          type="range"
-          id="removalLevel"
-          min="0"
-          max="100"
-          value={removalLevel}
-          onChange={(e) => setRemovalLevel(Number(e.target.value))}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-          aria-label="Adjust background removal level"
-        />
       </div>
       <div className="mt-8 text-center text-sm text-gray-600">
         <p>Use arrow keys to navigate. Press Enter to select. Use space bar to activate buttons.</p>
